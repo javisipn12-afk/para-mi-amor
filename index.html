@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para mi amor ❤️</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{
+  font-family:Georgia,"Times New Roman",serif;
+  background:radial-gradient(circle at 50% 35%,#5d071d 0,#21000b 45%,#050106 100%);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+}
+canvas{position:fixed;inset:0;z-index:0}
+.scene{position:relative;z-index:2;width:min(920px,94vw);height:min(720px,94vh);
+display:flex;align-items:center;justify-content:center;perspective:1200px}
+.card{
+ width:min(760px,92vw);max-height:90vh;overflow:auto;
+ padding:34px 28px 30px;border-radius:32px;text-align:center;
+ background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.045));
+ border:1px solid rgba(255,220,230,.35);
+ box-shadow:0 25px 80px rgba(0,0,0,.6),inset 0 0 40px rgba(255,60,120,.08);
+ backdrop-filter:blur(12px);transform:rotateX(2deg);
+}
+.small{letter-spacing:5px;text-transform:uppercase;font-size:12px;color:#ffd3df}
+h1{font-size:clamp(40px,8vw,76px);margin:8px 0 0;
+background:linear-gradient(90deg,#fff,#ff9db8,#fff);-webkit-background-clip:text;color:transparent;
+text-shadow:0 0 30px rgba(255,70,130,.3)}
+.subtitle{font-size:18px;color:#ffd8e3;margin:4px 0 18px}
+.anniversary-image{margin:8px auto 10px;max-width:470px}
+.anniversary-image img{display:block;width:100%;max-height:260px;object-fit:cover;border-radius:22px;
+ box-shadow:0 12px 40px rgba(255,20,80,.35);border:1px solid rgba(255,220,230,.35)}
+.anniversary-caption{margin-top:7px;font-size:14px;color:#ffd5e0;letter-spacing:2px}
+.heart-wrap{height:245px;display:flex;align-items:center;justify-content:center}
+.heart{
+ width:150px;height:150px;position:relative;transform:rotate(-45deg);
+ background:linear-gradient(135deg,#ff315f,#a80032 70%);
+ box-shadow:0 0 35px #ff174f,0 0 85px rgba(255,0,70,.55);
+ animation:pulse 1.55s infinite ease-in-out;
+ cursor:pointer;
+}
+.heart:before,.heart:after{content:"";position:absolute;width:150px;height:150px;
+border-radius:50%;background:inherit}
+.heart:before{top:-75px;left:0}.heart:after{left:75px;top:0}
+.heart span{position:absolute;z-index:3;transform:rotate(45deg);left:42px;top:57px;
+font-size:20px;font-weight:bold;white-space:nowrap;text-shadow:0 2px 10px #5b001c}
+@keyframes pulse{50%{transform:rotate(-45deg) scale(1.09)}}
+.message{
+ max-width:620px;margin:auto;font-size:19px;line-height:1.75;color:#fff1f5;
+ opacity:0;transform:translateY(15px);transition:1.2s ease;
+}
+.message.show{opacity:1;transform:none}
+button{
+ border:0;border-radius:999px;padding:14px 28px;margin-top:20px;
+ font-size:16px;font-weight:bold;color:#5b001c;background:#ffd8e4;
+ cursor:pointer;box-shadow:0 8px 25px rgba(0,0,0,.25);
+}
+button:hover{transform:translateY(-2px)}
+.signature{margin-top:20px;font-size:16px;color:#ffbdcf}
+.hint{font-size:12px;color:#dcaebb;margin-top:8px}
+.float{position:fixed;z-index:1;bottom:-40px;font-size:20px;animation:up linear forwards;pointer-events:none}
+@keyframes up{to{transform:translateY(-110vh) rotate(360deg);opacity:0}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<div class="scene">
+ <div class="card">
+   <div class="small">Para alguien muy especial</div>
+   <h1>Mi amor ❤️</h1>
+   <div class="subtitle">Hay cosas que simplemente no caben en un mensaje de WhatsApp...</div>
+
+   <div class="anniversary-image">
+     <img src="30_mas_2.png" alt="30+2 ❤️">
+     <div class="anniversary-caption">30+2 ❤️</div>
+   </div>
+
+   <div class="heart-wrap">
+     <div class="heart" id="heart"><span>Te amo</span></div>
+   </div>
+
+   <div class="message" id="msg">
+     <p><b>Mi amor:</b></p>
+     <p>
+       Quiero que sepas algo muy sencillo, pero muy importante:
+       <b>te amo y te extraño muchísimo.</b>
+     </p>
+     <p>
+       Aunque no siempre pueda estar cerca de ti como quisiera,
+       eres muy importante para mí y ocupas un lugar
+       enorme en mi corazón.
+     </p>
+     <p>
+       Gracias por todos los momentos, las sonrisas, las conversaciones
+       y todo lo bonito que hemos compartido.
+     </p>
+     <p>
+       Esto lo hice solamente para recordarte que, detrás de todas mis
+       palabras, proyectos y ocurrencias, hay alguien que simplemente
+       quería hacerte sonreír hoy.
+     </p>
+     <p><b>Te amo. ❤️</b></p>
+   </div>
+
+   <button id="open">💌 Abrir mi mensaje</button>
+   <div class="signature">De tu EPI</div>
+   <div class="hint">Psst... toca el corazón después de abrir el mensaje ✨</div>
+ </div>
+</div>
+
+<script>
+const msg=document.getElementById("msg");
+const btn=document.getElementById("open");
+const heart=document.getElementById("heart");
+
+function burst(){
+ for(let i=0;i<18;i++){
+   const e=document.createElement("div");
+   e.className="float";
+   e.textContent=["❤️","💕","💖","✨","🌹"][Math.floor(Math.random()*5)];
+   e.style.left=(20+Math.random()*60)+"vw";
+   e.style.fontSize=(14+Math.random()*22)+"px";
+   e.style.animationDuration=(3+Math.random()*3)+"s";
+   document.body.appendChild(e);
+   setTimeout(()=>e.remove(),6500);
+ }
+}
+btn.onclick=()=>{
+ msg.classList.add("show");
+ btn.textContent="❤️ Te amo";
+ burst();
+};
+heart.onclick=burst;
+
+// Fondo de estrellas/partículas
+const c=document.getElementById("stars"),ctx=c.getContext("2d");
+let w,h,pts=[];
+function resize(){w=c.width=innerWidth*devicePixelRatio;h=c.height=innerHeight*devicePixelRatio;
+pts=Array.from({length:100},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+0.3,a:Math.random()}))}
+resize();addEventListener("resize",resize);
+function draw(){
+ ctx.clearRect(0,0,w,h);
+ pts.forEach(p=>{p.a+=.01;ctx.globalAlpha=.25+.35*Math.sin(p.a);
+ ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()});
+ requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
